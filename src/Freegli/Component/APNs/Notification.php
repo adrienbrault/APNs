@@ -17,7 +17,7 @@ class Notification
     private $tokenLength;
     private $deviceToken;
     private $payloadLength;
-    private $payload
+    private $payload;
 
     public function  __construct()
     {
