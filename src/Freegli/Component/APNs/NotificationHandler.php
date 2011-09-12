@@ -16,7 +16,7 @@ class NotificationHandler
         $this->connection = $connection;
     }
 
-    public function send(PushNotification $pushNotification)
+    public function send(Notification $pushNotification)
     {
         $binaryPushNotification = $pushNotification->toBinary();
 
