@@ -2,6 +2,7 @@
 
 namespace Freegli\Component\APNs;
 
+use Freegli\Component\APNs\Exception\ConvertException;
 use Freegli\Component\APNs\Exception\LengthException;
 
 /**
@@ -30,9 +31,11 @@ class Feedback
             throw new LengthException();
         }
         try {
-            list ($timestamp, $this->tokenLength, $this->deviceToken) = unpack('NnH*', $binaryString);
+            $unpacked = unpack('Ntimestamp/ntokenLength/H*deviceToken', $binaryString);
 
-            $this->timestamp = new \DateTime($timestamp);
+            $this->timestamp   = \DateTime::createFromFormat('U', $unpacked['timestamp']);
+            $this->tokenLength = $unpacked['tokenLength'];
+            $this->deviceToken = $unpacked['deviceToken'];
         } catch (\Exception $e) {
             throw new ConvertException('Unable to convert binary string to '.__CLASS__, null, $e);
         }
