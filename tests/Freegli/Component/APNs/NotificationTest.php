@@ -19,6 +19,6 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         ));
 
         $bin = file_get_contents(__DIR__.'/../../../Resources/notification.bin');
-        $this->assertStringEndsWith($bin, $notification->toBinary());
+        $this->assertEquals($bin, $notification->toBinary());
     }
 }
