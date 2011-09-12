@@ -22,7 +22,7 @@ class Factory
     {
         $this->certificatPath       = $certificatPath;
         $this->certificatPassPhrase = $certificatPassPhrase;
-        $this->sandox               = $sandox;
+        $this->sandbox              = $sandbox;
     }
 
     /**
@@ -33,7 +33,7 @@ class Factory
     public function createPushNotificationHandler()
     {
         $url = sprintf('ssl://%s:%s',
-            $this->sandox ? self::NOTIFICATION_SANDBOX_HOST : self::NOTIFICATION_PRODUCTION_HOST,
+            $this->sandbox ? self::NOTIFICATION_SANDBOX_HOST : self::NOTIFICATION_PRODUCTION_HOST,
             self::NOTIFICATION_PORT
         );
 
@@ -51,7 +51,7 @@ class Factory
     public function createFeedbackHandler()
     {
         $url = sprintf('ssl://%s:%s',
-            $this->sandox ? self::FEEDBACK_SANDBOX_HOST : self::FEEDBACK_PRODUCTION_HOST,
+            $this->sandbox ? self::FEEDBACK_SANDBOX_HOST : self::FEEDBACK_PRODUCTION_HOST,
             self::FEEDBACK_PORT
         );
 
