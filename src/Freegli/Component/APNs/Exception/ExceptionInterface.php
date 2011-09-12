@@ -1,7 +1,7 @@
 <?php
 
-namespace Freegli\Component\APNs;
+namespace Freegli\Component\APNs\Exception;
 
-class Exception extends \Exception
+interface ExceptionInterface
 {
 }
