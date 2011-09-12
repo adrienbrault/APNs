@@ -1,6 +1,6 @@
 <?php
 
-namespace Freegli\Component\APNs
+namespace Freegli\Component\APNs;
 
 use Freegli\Component\APNs\Exception\ConnectionException;
 
