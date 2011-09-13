@@ -57,16 +57,19 @@ class Notification
     public function toBinary()
     {
         try {
-            return pack('CNNnH*',
+            $payload = $this->formatPayload();
+
+            return
+                pack('CNNnH*',
                     $this->command,
                     $this->identifier,
                     $this->expiry->format('U'),
-                    strlen($this->deviceToken),
+                    strlen($this->deviceToken) / 2,
                     $this->deviceToken
                 )
-                .pack('n', strlen($this->formatPayload()))
-                .$this->formatPayload()
-           ;
+                .pack('n', strlen($payload))
+                .$payload
+            ;
         } catch (\Exception $e) {
             throw new ConvertException('Unable to convert to binary', null, $e);
         }
