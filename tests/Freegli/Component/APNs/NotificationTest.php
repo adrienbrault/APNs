@@ -17,6 +17,8 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
                 'alert' => 'Alert!'
             )
         ));
-        $this->assertStringEndsWith('{"aps":{"alert":"Alert!"}}', $notification->toBinary());
+
+        $bin = file_get_contents(__DIR__.'/../../../Resources/notification.bin');
+        $this->assertEquals($bin, $notification->toBinary());
     }
 }
