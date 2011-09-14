@@ -27,6 +27,6 @@ class NotificationHandler
 
         $written = fwrite($this->connection, $binaryPushNotification);
 
-        //TODO handle error
+        return $written == strlen($binaryPushNotification);
     }
 }
