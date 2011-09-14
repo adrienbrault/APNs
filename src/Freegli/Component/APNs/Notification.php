@@ -11,18 +11,16 @@ use Freegli\Component\APNs\Exception\ConvertException;
  */
 class Notification
 {
-    private $command;
+    CONST COMMAND_ENHANCED_NOTIFICATION_FORMAT = 1;
+    
     private $identifier;
     private $expiry;
-    private $tokenLength;
     private $deviceToken;
-    private $payloadLength;
     private $payload;
 
     public function  __construct()
     {
         //set default values
-        $this->command    = 1;
         $this->identifier = 1;
         $this->expiry     = new \DateTime('+12 hours');
     }
@@ -57,18 +55,22 @@ class Notification
     public function toBinary()
     {
         try {
+            $command = pack('C', self::COMMAND_ENHANCED_NOTIFICATION_FORMAT);
+            $identifier = pack('N', $this->identifier);
+            $expiry = pack('N', $this->expiry->format('U'));
+            $deviceToken = pack('H*', $this->deviceToken);
+            $deviceTokenLength = pack('n', strlen($deviceToken));
             $payload = $this->formatPayload();
+            $payloadLength = pack('n', strlen($payload));
 
             return
-                pack('CNNnH*',
-                    $this->command,
-                    $this->identifier,
-                    $this->expiry->format('U'),
-                    strlen($this->deviceToken) / 2,
-                    $this->deviceToken
-                )
-                .pack('n', strlen($payload))
-                .$payload
+                $command.
+                $identifier.
+                $expiry.
+                $deviceTokenLength.
+                $deviceToken.
+                $payloadLength.
+                $payload
             ;
         } catch (\Exception $e) {
             throw new ConvertException('Unable to convert to binary', null, $e);
