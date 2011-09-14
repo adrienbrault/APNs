@@ -38,7 +38,7 @@ class Factory
         );
 
         $nh = new NotificationHandler();
-        $nh->setConnection($this->getConnection($url));
+        $nh->setConnection($this->createConnection($url));
 
         return $nh;
     }
@@ -56,7 +56,7 @@ class Factory
         );
 
         $fh = new FeedbackHandler();
-        $fh->setConnection($this->getConnection($url));
+        $fh->setConnection($this->createConnection($url));
 
         return $fh;
     }
@@ -70,7 +70,7 @@ class Factory
      *
      * @throws ConnectionException
      */
-    private function getConnection($url)
+    private function createConnection($url)
     {
         $streamContext = stream_context_create();
         stream_context_set_option($streamContext, 'ssl', 'local_cert', $this->certificatPath);
